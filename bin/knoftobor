@@ -1,0 +1,6 @@
+#!/usr/bin/env node
+
+'use strict';
+
+ new (require('../'))(require('../package.json').name)
+	.run(process.argv.slice(2));

@@ -1,0 +1,18 @@
+{
+  "name": "knoftobor",
+  "version": "0.0.1",
+  "description": "That which we do not name",
+  "main": "index.js",
+  "bin": {
+    "knoftobor": "./bin/knoftobor"
+  },
+  "author": "wybe minnebo",
+  "license": "MIT",
+  "dependencies": {
+    "ask-nicely": "wvbe/ask-nicely",
+    "cross-spawn-async": "^2.2.5",
+    "globby": "^6.1.0",
+    "remote-origin-url": "^0.5.2",
+    "speak-softly": "wvbe/speak-softly"
+  }
+}
