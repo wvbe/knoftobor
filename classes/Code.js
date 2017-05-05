@@ -2,7 +2,7 @@
 
 let path = require('path');
 
-const getRemoveOriginUrl = require('remote-origin-url');
+const gitRemoteOriginUrl = require('git-remote-origin-url');
 
 const getShellOutput = require('../primitives/getShellOutput');
 class Code {
@@ -29,7 +29,7 @@ class Code {
 
 	getRemoteUrl () {
 		try {
-			return Promise.resolve(getRemoveOriginUrl.sync(path.resolve(this.path, '.git', 'config')));
+			return gitRemoteOriginUrl(this.path);
 		} catch (err) {
 			return Promise.reject(err);
 		}
