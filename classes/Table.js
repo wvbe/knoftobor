@@ -1,6 +1,6 @@
 'use strict';
 
-const AskNicely = require('ask-nicely');
+const ask = require('ask-nicely');
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
@@ -41,17 +41,17 @@ class Table {
 	constructor (columns) {
 		this.columns = columns;
 
-		this.sortOption = new AskNicely.Option('sort')
+		this.sortOption = new ask.Option('sort')
 			.setShort('s')
 			.setDescription('Column name or number to sort by (defaults to 0, first column)')
 			.setDefault(0, true);
 
-		this.columnsOption = new AskNicely.MultiOption('columns')
+		this.columnsOption = new ask.MultiOption('columns')
 			.setDescription('One or more space-separated column names to print (' + columns.map(col => col.name + (col.default ? '*' : '')).join('|')+ '), only works when not exporting.')
 			.setShort('c')
 			.setDefault(columns.filter(col => col.default).map(col => col.name), true);
 
-		this.exportOption = new AskNicely.Option('export')
+		this.exportOption = new ask.Option('export')
 			.setDescription('Export table to a file; the export type is determined by the file extension (' +Object.keys(exportTransformers).map((col, i) => col + (!i ? '*' : '')).join('|')+')')
 			.setShort('e');
 	}
@@ -92,7 +92,7 @@ function printData (res, visibleColumnDefinitions, tableData, exportLocation) {
 	let ext = path.extname(path.basename(exportLocation)).replace('.', '');
 
 	if(!exportTransformers[ext])
-		throw new AskNicely.InputError(`Unknown export type "${ext}"`, `You can export a table by using the "export" option to specify a file with one of the following extensions: ${Object.keys(exportTransformers).join('|')}`);
+		throw new ask.InputError(`Unknown export type "${ext}"`, `You can export a table by using the "export" option to specify a file with one of the following extensions: ${Object.keys(exportTransformers).join('|')}`);
 
 	res.debug(`Exporting to "${exportLocation}"`);
 	var exported = exportTransformers[ext](tableData);

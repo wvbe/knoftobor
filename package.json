@@ -9,7 +9,7 @@
   "author": "wybe minnebo",
   "license": "MIT",
   "dependencies": {
-    "ask-nicely": "wvbe/ask-nicely",
+    "ask-nicely": "^3.0.0",
     "cross-spawn-async": "^2.2.5",
     "git-remote-origin-url": "^2.0.0",
     "globby": "^6.1.0",

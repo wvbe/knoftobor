@@ -5,7 +5,7 @@ const path = require('path');
 
 // 3rd party node modules
 const glob = require('globby');
-const AskNicely = require('ask-nicely');
+const ask = require('ask-nicely');
 const SpeakSoftly = require('speak-softly');
 
 
@@ -25,7 +25,7 @@ class Knoftobor {
 
 		this.config = new ConfigManager(name);
 
-		this.commands = new AskNicely(this.name);
+		this.commands = new ask.Command(this.name);
 
 		this.logger = new SpeakSoftly(this.config.colors || {}, {
 			indentation: '  '
@@ -50,13 +50,12 @@ class Knoftobor {
 
 	run (argv) {
 		return (this.cwd()
-				? this.commands.interpret(Object.assign([], argv), null, this.logger)
-				: Promise.reject(new AskNicely.InputError(
+				? this.commands.execute(argv, null, this.logger)
+				: Promise.reject(new ask.InputError(
 					`Couldn't find the ${this.name} configuration file`,
 					`Create a a file called "${this.config.getFileName()}" in ${process.cwd()} or one of its ancestors`
 				))
 			)
-			.then(request => request.execute(this.logger))
 
 			.catch(err => this.error('knoftofail', err, {
 				argv: [this.name].concat(argv.map(arg => arg.indexOf(' ') >= 0 ? `"${arg}"` : arg)).join(' '),
@@ -79,7 +78,7 @@ class Knoftobor {
 		else
 			console.trace('Empty error');
 
-		if (err instanceof AskNicely.InputError)
+		if (err instanceof ask.InputError)
 			this.logger.log(err.solution || 'You might be able to fix this, use the "--help" flag for usage info');
 		else {
 			this.logger.debug(err.stack);
