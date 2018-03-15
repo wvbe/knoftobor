@@ -45,7 +45,7 @@ class Knoftobor {
 	}
 
 	cwd() {
-		return path.dirname(this.config.getPath());
+		return this.config.getPath() && path.dirname(this.config.getPath());
 	}
 
 	run (argv) {
